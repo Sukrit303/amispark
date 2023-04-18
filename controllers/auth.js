@@ -130,7 +130,9 @@ exports.login = async (req, res, next) => {
             })
             res.status(200).cookie("token", token, { httpOnly: true }).json({
                 success: true,
-                message: "Login Successfully"
+                message: "Login Successfully",
+                role : organiser.role
+
             })
         } else {
             return next(new ErrorHandler("Please enter valid email and password", 403))
