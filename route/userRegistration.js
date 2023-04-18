@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { userRegister, addOrganiser, login, logout, updateOrganiser, deleteOrganiser, getOrganiser, getRegisteredUser, getRegisteredUserAdmin } = require('../controllers/auth')
+const { userRegister, addOrganiser, login, logout, updateOrganiser, deleteOrganiser, getOrganiser, getRegisteredUser, getRegisteredUserAdmin,getUserProfile } = require('../controllers/auth')
 const { isAuthenticatedUser, roleValidation, allRoleValidation } = require('../middlewares/auth')
 
 router.post('/user/registration', userRegister)
@@ -9,6 +9,8 @@ router.post('/registration/organiser', isAuthenticatedUser, roleValidation, addO
 router.get('/registration/organiser', isAuthenticatedUser, roleValidation, getOrganiser)
 router.put('/registration/organiser/:id', isAuthenticatedUser, roleValidation, updateOrganiser)
 router.delete('/registration/organiser/:id', isAuthenticatedUser, roleValidation, deleteOrganiser)
+router.get('/me', isAuthenticatedUser, getUserProfile)
+
 router.post('/login', login)
 router.get('/logout', logout)
 
