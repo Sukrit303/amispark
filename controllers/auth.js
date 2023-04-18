@@ -202,3 +202,10 @@ exports.getOrganiser = async (req, res, next) => {
         return next(new ErrorHandler(err.message, 500))
     }
 }
+exports.getUserProfile = async (req, res, next) => {
+    const User = await Organiser.findById(req.user.id);;
+    res.status(200).json({
+        success: true,
+        User
+    })
+}
