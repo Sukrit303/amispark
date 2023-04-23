@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const Admin = require("../models/admin")
 
 exports.isAuthenticatedUser =  async (req, res, next) => {
-    const { token } = req.cookies
+    const token = req.header("x-authToken")
 
     if(!token) {
         return next(new ErrorHandler('Login first to access this resource.', 401))
@@ -17,6 +17,7 @@ exports.isAuthenticatedUser =  async (req, res, next) => {
 exports.roleValidation = async (req, res, next) => {
     try {
         let user = req.user;
+
         if(user.role == 'admin') {
             next();
         } else {
