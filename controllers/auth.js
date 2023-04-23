@@ -36,14 +36,12 @@ exports.userRegister = async (req, res, next) => {
 exports.getRegisteredUser = async (req, res, next) => {
     try {
         const id = req.params.id;
-        let count;
         let userData = []
         const user = await Registration.find()
         const organiser = req.user
 
         if (organiser.role == "organiser") {
             const eventList = await Events.findOne({ organiserEmail: organiser.email, eventId: id })
-
             if (eventList) {
                 user.map((val) => {
                     val.events.map((eventId) => {
@@ -68,7 +66,6 @@ exports.getRegisteredUser = async (req, res, next) => {
         res.status(200).json({
             success: true,
             data: userData,
-            count: userData.length
         })
     } catch (err) {
         return next(new ErrorHandler(err.message, 500))
@@ -128,11 +125,11 @@ exports.login = async (req, res, next) => {
             const token = await jwt.sign({ id: organiser._id }, process.env.jwtSecret, {
                 expiresIn: process.env.jwtExpireTime
             })
-            res.status(200).cookie("token", token, { httpOnly: true }).json({
+            res.status(200).json({
                 success: true,
                 message: "Login Successfully",
-                role : organiser.role
-
+                role : organiser.role,
+                authToken: token
             })
         } else {
             return next(new ErrorHandler("Please enter valid email and password", 403))
@@ -146,7 +143,7 @@ exports.login = async (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
     try {
-        res.cookie('token', null, {
+        res.header('x-authToken', "", {
             expires: new Date(Date.now())
         })
         res.status(200).json({
@@ -210,4 +207,43 @@ exports.getUserProfile = async (req, res, next) => {
         success: true,
         User
     })
+}
+
+exports.getRegisterUserCount = async (req, res, next) => {
+    try {
+        let userChecker = req.user;
+        let count;
+        if(userChecker.role == "organiser") {
+            const events = await Events.find({organiserEmail : userChecker.email});
+            const eventId = [];
+            events.map((data) => {
+                eventId.push(data.eventId)
+            })
+            console.log(eventId)
+            let user = []
+            let participants = await Registration.find()
+            participants.map((val) => {
+                val.events.map((value) => {
+                    eventId.map((data) => {
+                        if(data == value) {
+                            user.push(val)
+                        }
+                    })
+                })
+            })
+            count = user.length
+        }
+
+        if(userChecker.role == "admin") {
+            const registerUser = await Registration.find();
+            count = registerUser.length
+        }
+
+        res.status(200).json({
+            success: true,
+            count
+        })
+    } catch (err) {
+        return next(new ErrorHandler(err.message, 500));
+    }
 }
