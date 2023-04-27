@@ -123,7 +123,12 @@ exports.getAllEvents = async (req, res, next) => {
                 data.push({
                     eventId: event.eventId,
                     title: event.title,
-                    price: event.amitianPrice
+                    price: event.amitianPrice,
+                    studentCordinator: event.studentCordinator,
+                    facultyCordinator : event.facultyCordinator,
+                    image:  event.image,
+                    description: event.description
+
                 })
             })
         } else if(amitian == "false"){
@@ -132,7 +137,12 @@ exports.getAllEvents = async (req, res, next) => {
                 data.push({
                     eventId: event.eventId,
                     title: event.title,
-                    price: event.nonAmitianPrice
+                    price: event.nonAmitianPrice,
+                    studentCordinator: event.studentCordinator,
+                    facultyCordinator : event.facultyCordinator,
+                    image:  event.image,
+                    description: event.description
+
                 })
             })
         }
