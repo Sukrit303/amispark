@@ -67,14 +67,11 @@ exports.addEvents = async (req, res, next) => {
                 title,
                 description,
                 studentCordinator,
+                
                 image: {
-                    public_id: 1231356,
-                    url: "https://res.cloudinary.com/apnidukanimg/image/upload/v1650972079/cld-sample.jpg"
+                    public_id: result.public_id,
+                    url: result.secure_url
                 },
-                // image: {
-                //     public_id: result.public_id,
-                //     url: result.secure_url
-                // },
                 facultyCordinator,
                 amitianPrice,
                 nonAmitianPrice,
