@@ -83,7 +83,7 @@ exports.addEvents = async (req, res, next) => {
             success: true,
             message: "Event register Successfully",
             data: event
-        })
+        }).setHeader('Access-Control-Allow-Origin', '*')
     } catch (err) {
         return next(new ErrorHandler(err.message, 500))
     }
