@@ -19,7 +19,7 @@ cloudinary.config({
 })
 
 app.use(cors({
-    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+    origin: '*'
 }))
 // Database connection
 require('./database/database')
