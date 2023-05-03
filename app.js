@@ -18,7 +18,9 @@ cloudinary.config({
     api_secret : process.env.cloudinarySecretKey
 })
 
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 // Database connection
 require('./database/database')
 
