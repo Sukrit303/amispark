@@ -19,7 +19,7 @@ cloudinary.config({
 })
 
 app.use(cors({
-    Access-Control-Allow-Origin: *
+    origin: 'https://amispark.netlify.app'
 }));
 // Database connection
 require('./database/database')
