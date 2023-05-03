@@ -18,7 +18,9 @@ cloudinary.config({
     api_secret : process.env.cloudinarySecretKey
 })
 
-app.use(cors())
+app.use(cors({
+    methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
+}))
 // Database connection
 require('./database/database')
 
