@@ -19,7 +19,7 @@ cloudinary.config({
 })
 
 app.use(cors({
-    origin: '*'
+    origin: ['https://amispark.vercel.app/events', 'https://amispark.netlify.app/']
 }))
 // Database connection
 require('./database/database')
