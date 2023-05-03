@@ -18,9 +18,7 @@ cloudinary.config({
     api_secret : process.env.cloudinarySecretKey
 })
 
-app.use(cors({
-    origin: 'https://amispark.vercel.app/events'
-}))
+app.use(cors());
 // Database connection
 require('./database/database')
 
